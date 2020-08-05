@@ -20,7 +20,8 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
-    "import/no-unresolved": [2, {"commonjs": false, "amd": false}],
-    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }]
+    "import/extensions": [1, {"tsx": "ignorePackages","svg": "ignorePackages"}],
+    "import/no-unresolved": [2, {"ignore": ['.ts']}],
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
   }
 };
