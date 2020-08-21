@@ -1,8 +1,10 @@
 import express from 'express';
+import cors from 'cors';
 import routes from './routes';
 
 const app = express();
 
+app.use(cors()) // permite roda simultaneamente o servido e a aplicação
 app.use(express.json());
 
 /*
