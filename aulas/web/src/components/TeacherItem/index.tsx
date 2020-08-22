@@ -3,6 +3,7 @@ import React from 'react';
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
 
 import './styles.css';
+import api from '../../services/api';
 
 export interface Teacher {
   avatar: string,
@@ -18,33 +19,48 @@ interface TeacherItemProps {
   teacher: Teacher
 }
 
-const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => (
-  <article className="teacher-item">
-    <header>
-      <img src={teacher.avatar} alt={teacher.name} />
-      <div>
-        <strong>{teacher.name}</strong>
-        <span>{teacher.subject}</span>
-      </div>
-    </header>
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  function createNewConnection() {
+    api.post('connections', {
+      user_id: teacher.id,
+    });
+  }
 
-    <p>
-      {teacher.bio}
-      {' '}
-    </p>
+  return (
+    <article className="teacher-item">
+      <header>
+        <img src={teacher.avatar} alt={teacher.name} />
+        <div>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
+        </div>
+      </header>
 
-    <footer>
       <p>
-        Preço/hora
-        <strong>R$ {teacher.cost}</strong>
+        {teacher.bio}
+        {' '}
       </p>
-      <button type="button">
-        <img src={whatsappIcon} alt="Whatsapp" />
-        Entrar em contato
-      </button>
-    </footer>
 
-  </article>
-);
+      <footer>
+        <p>
+          Preço/hora
+          <strong>
+            R$
+            {teacher.cost}
+          </strong>
+        </p>
+        <a
+          target="_blank"
+          onClick={createNewConnection}
+          href={`https://wa.me/${teacher.whatsapp}?text=Olá ${teacher.name}, vi o seu perfil no Proffy e gostaria de ter aulas de ${teacher.subject}!`}
+        >
+          <img src={whatsappIcon} alt="Whatsapp" />
+          Entrar em contato
+        </a>
+      </footer>
+
+    </article>
+  );
+};
 
 export default TeacherItem;
